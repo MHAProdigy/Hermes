@@ -1,0 +1,27 @@
+{
+  "name": "hermes",
+  "main": "Client.js",
+  "version": "1.0.0",
+  "description": "Web server",
+  "author": "JasperLorelai",
+  "license": "ISC",
+  "engines": {
+    "node": "14.17.3",
+    "npm": "6.14.13"
+  },
+  "scripts": {
+    "start": "node --experimental-modules --trace-warnings Client.js",
+    "reinstall": "npm i --also=dev"
+  },
+  "dependencies": {
+    "atob": "^2.1.2",
+    "btoa": "^1.2.1",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "form-data": "^4.0.0",
+    "keyv": "^4.0.3",
+    "@keyv/mysql": "^1.1.4",
+    "md5": "^2.3.0",
+    "node-fetch": "~2.6.1"
+  }
+}
