@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const KeyvLib = require("keyv");
 const Keyv = new KeyvLib(process.env.DATABASE);
 
@@ -12,6 +14,7 @@ Object.prototype.getKeyByValue = function(value) {
     return Object.keys(this).find(key => this[key] === value);
 }
 
+Keyv.on("error", console.error);
 const Data = {};
 module.exports = {Data: Data, Keyv: Keyv};
 
@@ -42,9 +45,9 @@ app.listen(PORT, async () => {
     });
 });
 
-app.get("/:route", (request, response) => {
+app.get("/:route", async (request, response) => {
     const route = request.params.route;
-    if (routes.hasOwnProperty(route)) routes[route](request, response);
+    if (routes.hasOwnProperty(route)) await routes[route](request, response);
     else response.end();
 });
 app.post("/viber/webhook", (_, response) => {
