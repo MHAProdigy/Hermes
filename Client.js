@@ -10,6 +10,8 @@ const session = require("express-session");
 const express = require("express");
 const app = express();
 
+require("./ErrorHandler");
+
 Object.prototype.getKeyByValue = function(value) {
     return Object.keys(this).find(key => this[key] === value);
 }

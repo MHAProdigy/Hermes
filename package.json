@@ -1,6 +1,6 @@
 {
   "name": "hermes",
-  "main": "Client.js",
+  "main": "Necromancer.js",
   "version": "1.0.0",
   "description": "Web server",
   "author": "JasperLorelai",
@@ -14,6 +14,7 @@
     "reinstall": "npm i --also=dev"
   },
   "dependencies": {
+    "@keyv/mysql": "^1.1.4",
     "atob": "^2.1.2",
     "btoa": "^1.2.1",
     "dotenv": "^10.0.0",
@@ -21,8 +22,8 @@
     "express-session": "^1.17.2",
     "form-data": "^4.0.0",
     "keyv": "^4.0.3",
-    "@keyv/mysql": "^1.1.4",
     "md5": "^2.3.0",
-    "node-fetch": "~2.6.1"
+    "node-fetch": "~2.6.1",
+    "nodemon": "^2.0.12"
   }
 }
