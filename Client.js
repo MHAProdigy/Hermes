@@ -22,6 +22,14 @@ module.exports = {Data: Data, Keyv: Keyv};
 
 const Config = require("./Config");
 
+const archive = [];
+function addArchive(folder) {
+    if (archive.includes(archive)) return;
+    app.use("/archive/" + folder, express.static("../archive/" + folder));
+    archive.push(folder);
+}
+fs.readdirSync("../archive").forEach(addArchive);
+
 app.use(express.static("views"));
 app.use(session({
     // Random long string.
@@ -47,8 +55,28 @@ app.listen(PORT, async () => {
     });
 });
 
+app.get("/archive", (request, response) => {
+    response.send("<!DOCTYPE html>\n" +
+        '<html lang="en">\n' +
+        "<head>\n" +
+        "<meta http-equiv=\"Content-type\" content=\"text/html; charset=UTF-8\" />\n" +
+        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n" +
+        "<title>Archive</title></head>\n" +
+        "<body>\n" +
+        "<h1>Index of /</h1>\n" +
+        "<pre>\n" +
+        archive.map(folder => '<img src="/_autoindex/icons/folder.png" alt="directory"><a href="https://mhaprodigy.uk/archive/' + folder + '">' + folder + '</a><br>').join("\n") +
+        "</pre>\n" +
+        "<hr>\n" +
+        "</body>\n" +
+        "</html>");
+});
+app.get("/addarchive/:id", async (request, response) => {
+    addArchive(request.params.id);
+    response.end();
+});
 app.get("/:route", async (request, response) => {
-    const route = request.params.route;
+    const {route} = request.params;
     if (routes.hasOwnProperty(route)) await routes[route](request, response);
     else response.end();
 });
