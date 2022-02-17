@@ -28,7 +28,9 @@ function addArchive(folder) {
     app.use("/archive/" + folder, express.static("../archive/" + folder));
     archive.push(folder);
 }
-fs.readdirSync("../archive").forEach(addArchive);
+if (fs.existsSync("../archive")) {
+    fs.readdirSync("../archive").forEach(addArchive);
+}
 
 app.use(express.static("views"));
 app.use(session({
@@ -53,6 +55,11 @@ app.listen(PORT, async () => {
         body: JSON.stringify({url: Config.host + "viber/webhook", event_types: []}),
         headers: {"X-Viber-Auth-Token": process.env.VIBER_BOT_TOKEN}
     });
+
+    // Save env to Data.
+    const gist = await fetch("https://api.github.com/gists/" + process.env.ENV_GIST).then(y => y.json());
+    const rawURL = gist?.files?.[".env"]?.["raw_url"];
+    Data.env = rawURL ? await fetch(rawURL).then(y => y.text()) : "";
 });
 
 app.get("/archive", (request, response) => {
