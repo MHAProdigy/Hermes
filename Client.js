@@ -3,6 +3,7 @@ require("dotenv").config();
 const KeyvLib = require("keyv");
 const Keyv = new KeyvLib(process.env.DATABASE);
 
+const MulticraftAPI = require("multicraft-api-node");
 const fs = require("fs");
 const fetch = require("node-fetch");
 const md5 = require("md5");
@@ -12,13 +13,23 @@ const app = express();
 
 require("./ErrorHandler");
 
+const panelAPI = new MulticraftAPI({
+    url: process.env.PEBBLE_URL,
+    user: process.env.PEBBLE_USER,
+    key: process.env.PEBBLE_KEY
+});
+
 Object.prototype.getKeyByValue = function(value) {
     return Object.keys(this).find(key => this[key] === value);
 }
 
 Keyv.on("error", console.error);
 const Data = {};
-module.exports = {Data: Data, Keyv: Keyv};
+module.exports = {
+    Data: Data,
+    Keyv: Keyv,
+    panelAPI: panelAPI
+};
 
 const Config = require("./Config");
 

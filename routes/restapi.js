@@ -1,4 +1,5 @@
 const {Keyv} = require("../Client");
+const tryRestartServer = require("../actions/tryRestartServer");
 
 module.exports = async (request, response) => {
     for (const [key, value] of Object.entries(request.query)) {
@@ -25,6 +26,11 @@ module.exports = async (request, response) => {
                 break;
             case "getEnv":
                 if (value === process.env.ENV_PASSWORD) return response.sendFile("downloadedEnv.txt", {root: "."});
+                response.status(500);
+                response.send("No");
+                break;
+            case "startConstance":
+                if (value === process.env.ENV_PASSWORD) return await tryRestartServer.restart();
                 response.status(500);
                 response.send("No");
                 break;

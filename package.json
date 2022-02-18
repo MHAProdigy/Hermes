@@ -24,6 +24,7 @@
     "keyv": "^4.0.3",
     "md5": "^2.3.0",
     "node-fetch": "~2.6.1",
-    "nodemon": "^2.0.12"
+    "nodemon": "^2.0.12",
+    "multicraft-api-node": "github:Kore-Development/multicraft-api-node#c78b1c3a1b"
   }
 }
