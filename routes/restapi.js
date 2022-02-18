@@ -1,4 +1,4 @@
-const {Keyv, Data} = require("../Client");
+const {Keyv} = require("../Client");
 
 module.exports = async (request, response) => {
     for (const [key, value] of Object.entries(request.query)) {
@@ -24,7 +24,7 @@ module.exports = async (request, response) => {
                 response.send(await Keyv.get("memberTraffic") || {});
                 break;
             case "getEnv":
-                if (value === process.env.ENV_PASSWORD) return response.send("<pre>" + (Data.env || "") + "</pre>");
+                if (value === process.env.ENV_PASSWORD) return response.sendFile("downloadedEnv.txt", {root: "."});
                 response.status(500);
                 response.send("No");
                 break;

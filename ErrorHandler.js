@@ -12,7 +12,7 @@ async function handle(error, code = 0) {
                 color: 0xff0000,
                 title: error.message,
                 description: ">>> " + error.stack,
-                timestamp: Date.now()
+                timestamp: new Date()
             }]
         })
     });

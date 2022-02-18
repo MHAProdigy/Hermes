@@ -57,9 +57,11 @@ app.listen(PORT, async () => {
     });
 
     // Save env to Data.
+    if (fs.existsSync("downloadedEnv.txt") || !process.env.ENV_GIST) return;
     const gist = await fetch("https://api.github.com/gists/" + process.env.ENV_GIST).then(y => y.json());
     const rawURL = gist?.files?.[".env"]?.["raw_url"];
-    Data.env = rawURL ? await fetch(rawURL).then(y => y.text()) : "";
+    const file = rawURL ? await fetch(rawURL).then(y => y.text()) : "";
+    fs.writeFileSync("downloadedEnv.txt", file);
 });
 
 app.get("/archive", (request, response) => {
