@@ -1,6 +1,6 @@
-const Util = require("../Util");
-const Config = require("../Config");
-const {panelAPI} = require("../Client");
+const Util = require("./Util");
+const Config = require("./Config");
+const {panelAPI} = require("./Client");
 
 const id = {id: Config.multicraft.id};
 
@@ -25,5 +25,8 @@ module.exports = {
     async restart() {
         await panelAPI.restartServer(id);
         await this.handleLogLater();
+    },
+    async stop() {
+        await panelAPI.stopServer(id);
     }
 };

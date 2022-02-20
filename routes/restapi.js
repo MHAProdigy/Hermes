@@ -1,5 +1,5 @@
 const {Keyv} = require("../Client");
-const tryRestartServer = require("../actions/tryRestartServer");
+const constanceBot = require("../ConstanceBotManager");
 
 module.exports = async (request, response) => {
     for (const [key, value] of Object.entries(request.query)) {
@@ -29,10 +29,19 @@ module.exports = async (request, response) => {
                 response.status(500);
                 response.send("No");
                 break;
+            case "stopConstance":
+                if (value === process.env.ENV_PASSWORD) {
+                    response.end();
+                    await constanceBot.stop();
+                    return;
+                }
+                response.status(500);
+                response.send("No");
+                break;
             case "startConstance":
                 if (value === process.env.ENV_PASSWORD) {
                     response.end();
-                    await tryRestartServer.restart();
+                    await constanceBot.restart();
                     return;
                 }
                 response.status(500);
