@@ -30,7 +30,11 @@ module.exports = async (request, response) => {
                 response.send("No");
                 break;
             case "startConstance":
-                if (value === process.env.ENV_PASSWORD) return await tryRestartServer.restart();
+                if (value === process.env.ENV_PASSWORD) {
+                    response.end();
+                    await tryRestartServer.restart();
+                    return;
+                }
                 response.status(500);
                 response.send("No");
                 break;
