@@ -1,3 +1,4 @@
+const Util = require("../Util");
 const Config = require("../Config");
 const {panelAPI} = require("../Client");
 
@@ -16,8 +17,8 @@ module.exports = {
             }
             log = log.reverse().join("\n");
 
-            // Started
-            if (log.contains("Startup Reafy!") || log.contains("Server stopped")) return;
+            if (log.contains("Startup Reafy!")) return;
+            if (log.contains("Server stopped")) return await Util.sendErrorWebhook("Server stopped", log);
             await this.handleLogLater();
         }, 10 * 1000);
     },

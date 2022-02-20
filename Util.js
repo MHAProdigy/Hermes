@@ -20,5 +20,18 @@ module.exports = {
             headers: {Authorization: creds}
         }).then(y => y.json());
         return await fetch(request, {headers: {Authorization: "Bearer " + response["access_token"]}}).then(y => y.json());
+    },
+    async sendErrorWebhook(title, description) {
+        await fetch(process.env.ERROR_WEBHOOK, {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({embeds: [{
+                    color: 0xff0000,
+                    title: title,
+                    description: description,
+                    timestamp: new Date()
+                }]
+            })
+        });
     }
 };
