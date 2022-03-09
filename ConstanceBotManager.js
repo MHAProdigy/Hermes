@@ -17,8 +17,8 @@ module.exports = {
             }
             log = log.reverse().join("\n");
 
-            if (log.contains("Startup Reafy!")) return;
-            if (log.contains("Server stopped")) return await Util.sendErrorWebhook("Server stopped", log);
+            if (log.includes("Startup Reafy!")) return;
+            if (log.includes("Server stopped")) return await Util.sendErrorWebhook("Server stopped", log);
             await this.handleLogLater();
         }, 10 * 1000);
     },
