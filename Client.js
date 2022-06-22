@@ -76,20 +76,21 @@ app.listen(PORT, async () => {
 });
 
 app.get("/archive", (request, response) => {
-    response.send("<!DOCTYPE html>\n" +
-        '<html lang="en">\n' +
-        "<head>\n" +
-        "<meta http-equiv=\"Content-type\" content=\"text/html; charset=UTF-8\" />\n" +
-        "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\" />\n" +
-        "<title>Archive</title></head>\n" +
-        "<body>\n" +
-        "<h1>Index of /</h1>\n" +
-        "<pre>\n" +
-        archive.map(folder => '<img src="/_autoindex/icons/folder.png" alt="directory"><a href="https://mhaprodigy.uk/archive/' + folder + '">' + folder + '</a><br>').join("\n") +
-        "</pre>\n" +
-        "<hr>\n" +
-        "</body>\n" +
-        "</html>");
+    response.send(`
+        <!DOCTYPE html>
+        <html lang="en">
+            <head>
+                <meta http-equiv="Content-type" content="text/html; charset=UTF-8" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                <title>Archive</title>
+            </head>
+            <body>
+                <h1>Index of /</h1>
+                <pre>${archive.map(folder => `<img src="/_autoindex/icons/folder.png" alt="directory"><a href="https://mhaprodigy.uk/archive/${folder}">${folder}</a><br>`).join("\n")}</pre>
+                <hr>
+            </body>
+        </html>
+    `);
 });
 app.get("/addarchive/:id", async (request, response) => {
     addArchive(request.params.id);
