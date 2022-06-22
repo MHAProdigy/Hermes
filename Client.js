@@ -96,11 +96,22 @@ app.get("/addarchive/:id", async (request, response) => {
     addArchive(request.params.id);
     response.end();
 });
-app.get("/:route", async (request, response) => {
+app.get("/:route", async (request, response, next) => {
     const {route} = request.params;
     if (routes.hasOwnProperty(route)) await routes[route](request, response);
-    else response.end();
+    else next();
 });
 app.post("/viber/webhook", (_, response) => {
     response.sendStatus(200);
+});
+
+app.get("*", (request, response) => {
+    response.status(404);
+    response.send(`
+        <!doctype html>
+        <html lang="en">
+            <head><title>Error Page</title></head>
+            <body><img src="https://http.cat/404.jpg" alt="404 not found"></body>
+        </html>
+    `);
 });
